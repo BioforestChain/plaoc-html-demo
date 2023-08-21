@@ -1,0 +1,17 @@
+{
+  "id": "plaoc.html.demo.dweb",
+  "name": "plaoc-html",
+  "short_name": "plaoc", 
+  "description": "This is a sample application that includes instances of all dweb_plugins components.", 
+  "icon": "https://dweb.waterbang.top/icon.png", 
+  "images": [
+    "http://qiniu-waterbang.waterbang.top/bfm/cot-home_2058.webp",
+    "http://qiniu-waterbang.waterbang.top/bfm/defi.png",
+    "http://qiniu-waterbang.waterbang.top/bfm/nft.png"
+  ],
+  "author": ["bfs", "bfs@bfs.com"], 
+  "version": "1.0.0", 
+  "new_feature": "Added a new feature of shooting bubbles with a single click!",
+  "home": "https://dweb.waterbang.top",
+  "categories": ["test"] 
+}
