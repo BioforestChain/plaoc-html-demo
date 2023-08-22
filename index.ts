@@ -90,23 +90,21 @@ const sayHi = async (message = "今晚吃螃🦀️蟹吗？") => {
   if (data) {
     message = data;
   }
-  res = await dwebServiceWorker.externalFetch(`game.dweb.waterbang.top.dweb`, {
-    pathname: "/say/hi",
-    search: {
-      message: message,
-    },
-  });
-  console.log("收到回应消息 => ", await (await res.response).text());
+  const url = new URL("/say/hi",document.baseURI);
+  url.searchParams.set("message", message);
+  const res = await dwebServiceWorker.externalFetch(
+    `game.dweb.waterbang.top.dweb`,
+    url
+  );
+  console.log("收到回应消息 => ", await res.text());
 };
 
-const closeSayHi = () => {
-  console.log("res=>", res);
-  res?.close();
-};
 const canOpenUrl = async () => {
-  const res = await dwebServiceWorker.canOpenUrl(`game1.dweb.waterbang.top.dweb`)
-  console.log("canOpenUrl=>",res)
-}
+  const res = await dwebServiceWorker.canOpenUrl(
+    `game1.dweb.waterbang.top.dweb`
+  );
+  console.log("canOpenUrl=>", res);
+};
 
 dwebServiceWorker.addEventListener("fetch", async (event) => {
   console.log("Dweb Service Worker fetch!", event);
@@ -122,7 +120,6 @@ dwebServiceWorker.addEventListener("fetch", async (event) => {
 
 Object.assign(globalThis, {
   sayHi,
-  closeSayHi,
   canOpenUrl,
   statusBarGetColor,
   handleSubmit,

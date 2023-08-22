@@ -1,1 +1,1 @@
-export * from "../dweb_browser/plaoc/src/client/index";
+export * from "../dweb_browser/plaoc/build/client/";
