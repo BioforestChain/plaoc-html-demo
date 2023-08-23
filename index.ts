@@ -107,7 +107,7 @@ const canOpenUrl = async () => {
 };
 
 dwebServiceWorker.addEventListener("fetch", async (event) => {
-  console.log("Dweb Service Worker fetch!", event);
+  console.log("Dweb Service Worker fetch!", await event.getRemoteManifest());
   const url = new URL(event.request.url);
   if (url.pathname.endsWith("/say/hi")) {
     const hiMessage = url.searchParams.get("message");
