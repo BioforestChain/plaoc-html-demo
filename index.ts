@@ -6,7 +6,7 @@ import {
   barcodeScannerPlugin,
   dwebServiceWorker,
 } from "./plugin";
-const statusBar = document.querySelector("dweb-status-bar")!;
+// const statusBar = document.querySelector("dweb-status-bar")!;
 const barcodeScanner = document.querySelector("dweb-barcode-scanning")!;
 const handleSubmit = async ($event: Event) => {
   $event.preventDefault();
@@ -22,26 +22,26 @@ const startScanning = async () => {
   barcodeScanner.startScanning();
 };
 
-async function statusBarGetColor() {
-  alert((await statusBar.getState()).color);
-}
+// async function statusBarGetColor() {
+//   alert((await statusBar.getState()).color);
+// }
 
-async function hideStatusBar() {
-  statusBar.hide();
-}
+// async function hideStatusBar() {
+//   statusBar.hide();
+// }
 
-async function showStartBar() {
-  statusBar.show();
-}
-statusBar.addEventListener("statechange", (event) => {
-  console.log("statechange=>", event);
-});
+// async function showStartBar() {
+//   statusBar.show();
+// }
+// statusBar.addEventListener("statechange", (event) => {
+//   console.log("statechange=>", event);
+// });
 
-const virtualKeyBoard = document.querySelector("dweb-virtual-keyboard")!;
-// 监听状态变化
-virtualKeyBoard.addEventListener("statechange", (event) => {
-  console.log("virtualKeyBoard#statechange=>", event);
-});
+// const virtualKeyBoard = document.querySelector("dweb-virtual-keyboard")!;
+// // 监听状态变化
+// virtualKeyBoard.addEventListener("statechange", (event) => {
+//   console.log("virtualKeyBoard#statechange=>", event);
+// });
 
 const haptics = document.querySelector("dweb-haptics")!;
 
@@ -63,12 +63,6 @@ const shareHandle = async () => {
   });
 };
 
-const toast = document.querySelector("dweb-toast")!;
-
-// 显示
-const showToast = async () => {
-  await toast.show({ text: "我是toast🍓", duration: "short" });
-};
 
 const device = document.querySelector("dweb-device")!;
 const getUUID = async () => {
@@ -86,12 +80,13 @@ let res: $ExternalFetchHandle | null = null;
 const sayHi = async (message = "今晚吃螃🦀️蟹吗？") => {
   const input = document.getElementById("input1") as HTMLInputElement;
   const data = input.value;
-  console.log("sayHi=>", data);
   if (data) {
     message = data;
   }
-  const url = new URL("/say/hi",document.baseURI);
+  const base  = new URL(document.baseURI)
+  const url = new URL("/say/hi",base.origin);
   url.searchParams.set("message", message);
+  console.log("sayHi=>", data,url.href);
   const res = await dwebServiceWorker.externalFetch(
     `game.dweb.waterbang.top.dweb`,
     url
@@ -101,13 +96,14 @@ const sayHi = async (message = "今晚吃螃🦀️蟹吗？") => {
 
 const canOpenUrl = async () => {
   const res = await dwebServiceWorker.canOpenUrl(
-    `game1.dweb.waterbang.top.dweb`
+    `game.dweb.waterbang.top.dweb`
   );
   console.log("canOpenUrl=>", res);
 };
 
 dwebServiceWorker.addEventListener("fetch", async (event) => {
-  console.log("Dweb Service Worker fetch!", await event.getRemoteManifest());
+  const data = await event.getRemoteManifest()
+  console.log("Dweb Service Worker fetch!", data);
   const url = new URL(event.request.url);
   if (url.pathname.endsWith("/say/hi")) {
     const hiMessage = url.searchParams.get("message");
@@ -118,13 +114,20 @@ dwebServiceWorker.addEventListener("fetch", async (event) => {
   return event.respondWith("Not match any routes");
 });
 
+const restart = async () => {
+ const res = await dwebServiceWorker.restart()
+ console.log("restart=>",res)
+}
+
 Object.assign(globalThis, {
   sayHi,
   canOpenUrl,
-  statusBarGetColor,
+  getUUID,
+  restart,
+  // statusBarGetColor,
   handleSubmit,
-  hideStatusBar,
+  // hideStatusBar,
   startScanning,
-  showStartBar,
+  // showStartBar,
   dwebServiceWorker,
 });
