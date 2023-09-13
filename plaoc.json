@@ -1,0 +1,19 @@
+{
+  "defaultConfig":{
+    "lang": "zh"
+  },
+  "redirect":[
+    {
+      "matchMethod":["*","GET"],
+      "matchUrl":{
+        "pathname":"/index.html"
+      },
+      "to": {
+        "url": "/{{lang}}{{pattern.pathname.input}}",
+        "appendHeaders":{
+        },
+        "removeHeaders":[".*"]
+      }
+    }
+  ]
+}

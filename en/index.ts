@@ -1,4 +1,4 @@
-import "./plugin";
+import "../plugin";
 import {
   $ExternalFetchHandle,
   ImpactStyle,
@@ -6,7 +6,7 @@ import {
   barcodeScannerPlugin,
   configPlugin,
   dwebServiceWorker,
-} from "./plugin";
+} from "../plugin";
 // const statusBar = document.querySelector("dweb-status-bar")!;
 const barcodeScanner = document.querySelector("dweb-barcode-scanning")!;
 const handleSubmit = async ($event: Event) => {
@@ -121,10 +121,8 @@ const restart = async () => {
 }
 
 const setLang = async () => {
-  const res = await configPlugin.setLang("en")
-  if (res) {
-    location.reload()
-  }
+  const res = await configPlugin.setLang("zh",true)
+  console.log("res=>",res)
 }
 
 Object.assign(globalThis, {
