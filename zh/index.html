@@ -30,6 +30,13 @@
     <button onclick="setLang()">setLang</button>
   </div>
   <div>
+    <h3>保存图片到相册(android only/ios only)</h3>
+    <form onsubmit="savePictures(event)">
+      <input type="file" name="savePictures" id="savePictures">
+      <input type="submit" value="保存图片到相册">
+    </form>
+  </div>
+  <div>
     <h3>图片识别</h3>
     <form onsubmit="handleSubmit(event)">
       <input type="file" name="fileToUpload" id="fileToUpload">
@@ -44,18 +51,10 @@
     <h3>getUUID</h3>
     <button onclick="getUUID()">getUUID</button>
   </div>
-  <!-- <div>
-    <h3>获取状态栏颜色</h3>
-    <button onclick="statusBarGetColor()">status-bar-getColor</button>
-  </div>
   <div>
-    <h3>隐藏状态栏</h3>
-    <button onclick="hideStatusBar()">hide status-bar-getColor</button>
+    <h3>打开网页</h3>
+    <button onclick="open()">open</button>
   </div>
-  <div>
-    <h3>显示状态栏</h3>
-    <button onclick="showStartBar()">show status-bar-getColor</button>
-  </div> -->
 
   <script type="module" src="./index.ts"></script>
 </body>

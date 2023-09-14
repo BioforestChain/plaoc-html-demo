@@ -6,10 +6,10 @@
     {
       "matchMethod":["*","GET"],
       "matchUrl":{
-        "pathname":"/index.html"
+        "pathname":"*"
       },
       "to": {
-        "url": "/{{lang}}{{pattern.pathname.input}}",
+        "url": "{{pattern.pathname.input}}",
         "appendHeaders":{
         },
         "removeHeaders":[".*"]

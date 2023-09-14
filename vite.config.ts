@@ -6,10 +6,10 @@ import { defineConfig } from "vite";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: "./",
   build: {
     rollupOptions: {
       input: {
+        index: path.resolve(__dirname, 'index.html'),
         zh: path.join("zh", "/index.html"),
         en: path.join("en", "/index.html"),
       },

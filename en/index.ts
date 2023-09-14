@@ -1,11 +1,11 @@
 import "../plugin";
 import {
-  $ExternalFetchHandle,
   ImpactStyle,
   NotificationType,
   barcodeScannerPlugin,
   configPlugin,
   dwebServiceWorker,
+  fileSystemPlugin,
 } from "../plugin";
 // const statusBar = document.querySelector("dweb-status-bar")!;
 const barcodeScanner = document.querySelector("dweb-barcode-scanning")!;
@@ -22,27 +22,6 @@ const handleSubmit = async ($event: Event) => {
 const startScanning = async () => {
   barcodeScanner.startScanning();
 };
-
-// async function statusBarGetColor() {
-//   alert((await statusBar.getState()).color);
-// }
-
-// async function hideStatusBar() {
-//   statusBar.hide();
-// }
-
-// async function showStartBar() {
-//   statusBar.show();
-// }
-// statusBar.addEventListener("statechange", (event) => {
-//   console.log("statechange=>", event);
-// });
-
-// const virtualKeyBoard = document.querySelector("dweb-virtual-keyboard")!;
-// // 监听状态变化
-// virtualKeyBoard.addEventListener("statechange", (event) => {
-//   console.log("virtualKeyBoard#statechange=>", event);
-// });
 
 const haptics = document.querySelector("dweb-haptics")!;
 
@@ -64,7 +43,6 @@ const shareHandle = async () => {
   });
 };
 
-
 const device = document.querySelector("dweb-device")!;
 const getUUID = async () => {
   console.log(await device.getUUID());
@@ -76,7 +54,6 @@ const open = async () => {
   mwebview.open("https://docs.dweb-browser.org/");
 };
 
-let res: $ExternalFetchHandle | null = null;
 // 向desktop.dweb.waterbang.top.dweb 发送消息
 const sayHi = async (message = "今晚吃螃🦀️蟹吗？") => {
   const input = document.getElementById("input1") as HTMLInputElement;
@@ -84,10 +61,10 @@ const sayHi = async (message = "今晚吃螃🦀️蟹吗？") => {
   if (data) {
     message = data;
   }
-  const base  = new URL(document.baseURI)
-  const url = new URL("/say/hi",base.origin);
+  const base = new URL(document.baseURI);
+  const url = new URL("/say/hi", base.origin);
   url.searchParams.set("message", message);
-  console.log("sayHi=>", data,url.href);
+  console.log("sayHi=>", data, url.href);
   const res = await dwebServiceWorker.externalFetch(
     `game.dweb.waterbang.top.dweb`,
     url
@@ -103,7 +80,7 @@ const canOpenUrl = async () => {
 };
 
 dwebServiceWorker.addEventListener("fetch", async (event) => {
-  const data = await event.getRemoteManifest()
+  const data = await event.getRemoteManifest();
   console.log("Dweb Service Worker fetch!", data);
   const url = new URL(event.request.url);
   if (url.pathname.endsWith("/say/hi")) {
@@ -116,25 +93,35 @@ dwebServiceWorker.addEventListener("fetch", async (event) => {
 });
 
 const restart = async () => {
- const res = await dwebServiceWorker.restart()
- console.log("restart=>",res)
-}
+  dwebServiceWorker.restart();
+};
 
 const setLang = async () => {
-  const res = await configPlugin.setLang("zh",true)
-  console.log("res=>",res)
-}
+  const res = await configPlugin.setLang("en", false);
+  if (res) {
+    dwebServiceWorker.restart();
+  }
+  console.log("res=>", res);
+};
+
+const savePictures = async ($event: Event) => {
+  $event.preventDefault();
+  const target = document.getElementById("fileToUpload") as HTMLInputElement;
+  if (target && target.files?.[0]) {
+    alert(await fileSystemPlugin.savePictures({ files: target.files }));
+  }
+};
 
 Object.assign(globalThis, {
+  savePictures,
   setLang,
   sayHi,
   canOpenUrl,
   getUUID,
   restart,
-  // statusBarGetColor,
+  shareHandle,
+  open,
   handleSubmit,
-  // hideStatusBar,
   startScanning,
-  // showStartBar,
   dwebServiceWorker,
 });
