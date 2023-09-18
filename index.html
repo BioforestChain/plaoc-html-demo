@@ -29,13 +29,13 @@
   <div>
     <h3>保存图片到相册(android only/ios only)</h3>
     <form onsubmit="savePictures(event)">
-      <input type="file" name="savePictures" id="savePictures">
+      <input type="file" name="savePictures" id="$savePictures">
       <input type="submit" value="保存图片到相册">
     </form>
   </div>
   <div>
     <h3>图片识别</h3>
-    <form onsubmit="handleSubmit(event)">
+    <form onsubmit="handleSubmit(event)" accept="image/png, image/jpeg">
       <input type="file" name="fileToUpload" id="fileToUpload">
       <input type="submit" value="上传文件">
     </form>
@@ -43,6 +43,13 @@
   <div>
     <h3>打开扫码</h3>
     <button onclick="startScanning()">startScanning</button>
+  </div>
+  <div>
+    <h3>分享文件，不传递则分享内容(android only/ios only)</h3>
+    <form onsubmit="shareHandle(event)">
+      <input type="file" name="shareHandle" id="$shareHandle">
+      <input type="submit" value="分享">
+    </form>
   </div>
   <div>
     <h3>getUUID</h3>
