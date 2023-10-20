@@ -5,12 +5,23 @@
   },
   "redirect":[
     {
+      "matchMethod": ["*"],
+      "matchUrl": {
+        "pathname": "{/}assets/*"
+      },
+      "to": {
+        "url": "{{pattern.pathname.input}}",
+        "appendHeaders": {},
+        "removeHeaders": []
+      }
+    },
+    {
       "matchMethod":["*","GET"],
       "matchUrl":{
         "pathname":"*"
       },
       "to": {
-        "url": "{{pattern.pathname.input}}",
+        "url": "/{{lang}}{{pattern.pathname.input}}",
         "appendHeaders":{
         },
         "removeHeaders":[".*"]

@@ -1,4 +1,4 @@
-import "./plugin";
+import "@plaoc/plugins";
 import {
   ImpactStyle,
   NotificationType,
@@ -6,7 +6,7 @@ import {
   configPlugin,
   dwebServiceWorker,
   fileSystemPlugin,
-} from "./plugin";
+} from "@plaoc/plugins";
 const barcodeScanner = document.querySelector("dweb-barcode-scanning")!;
 const handleSubmit = async ($event: Event) => {
   $event.preventDefault();
@@ -33,7 +33,7 @@ const notification = async () => {
 
 const share = document.querySelector("dweb-share")!;
 // 分享
-const shareHandle = async ($event) => {
+const shareHandle = async ($event: { preventDefault: () => void; }) => {
   $event.preventDefault();
   const target = document.getElementById("$shareHandle") as HTMLInputElement;
   if (target && target.files?.[0]) {

@@ -1,8 +1,8 @@
 {
 	"dependencies": {
-		"vite": "^4.4.9"
+		"vite": "^4.4.9",
+		"@plaoc/plugins":"0.3.9"
 	},
 	"devDependencies": {
-		"@types/node": "^20.6.0"
 	}
 }

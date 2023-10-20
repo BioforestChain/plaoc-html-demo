@@ -1,4 +1,4 @@
-import "../plugin";
+import "@plaoc/plugins";
 import {
   ImpactStyle,
   NotificationType,
@@ -6,8 +6,7 @@ import {
   configPlugin,
   dwebServiceWorker,
   fileSystemPlugin,
-} from "../plugin";
-// const statusBar = document.querySelector("dweb-status-bar")!;
+} from "@plaoc/plugins";
 const barcodeScanner = document.querySelector("dweb-barcode-scanning")!;
 const handleSubmit = async ($event: Event) => {
   $event.preventDefault();
@@ -34,7 +33,16 @@ const notification = async () => {
 
 const share = document.querySelector("dweb-share")!;
 // 分享
-const shareHandle = async () => {
+const shareHandle = async ($event: { preventDefault: () => void; }) => {
+  $event.preventDefault();
+  const target = document.getElementById("$shareHandle") as HTMLInputElement;
+  if (target && target.files?.[0]) {
+    return await share.share({
+      title: `分享:${target.files[0].name}`,
+      text: `size:${target.files[0].size},type:${target.files[0].type}`,
+      files: target.files,
+    });
+  }
   return await share.share({
     title: "分享标题🍉",
     text: "分享文字分享文字",
@@ -51,7 +59,7 @@ const getUUID = async () => {
 const mwebview = document.querySelector("dweb-mwebview")!;
 
 const open = async () => {
-  mwebview.open("https://docs.dweb-browser.org/");
+  // mwebview.open("https://docs.dweb-browser.org/");
 };
 
 // 向desktop.dweb.waterbang.top.dweb 发送消息
@@ -97,7 +105,7 @@ const restart = async () => {
 };
 
 const setLang = async () => {
-  const res = await configPlugin.setLang("en", false);
+  const res = await configPlugin.setLang("zh", false);
   if (res) {
     dwebServiceWorker.restart();
   }
@@ -106,7 +114,7 @@ const setLang = async () => {
 
 const savePictures = async ($event: Event) => {
   $event.preventDefault();
-  const target = document.getElementById("fileToUpload") as HTMLInputElement;
+  const target = document.getElementById("$savePictures") as HTMLInputElement;
   if (target && target.files?.[0]) {
     alert(await fileSystemPlugin.savePictures({ files: target.files }));
   }
