@@ -33,7 +33,7 @@ const notification = async () => {
 
 const share = document.querySelector("dweb-share")!;
 // 分享
-const shareHandle = async ($event: { preventDefault: () => void; }) => {
+const shareHandle = async ($event: { preventDefault: () => void }) => {
   $event.preventDefault();
   const target = document.getElementById("$shareHandle") as HTMLInputElement;
   if (target && target.files?.[0]) {
@@ -73,17 +73,12 @@ const sayHi = async (message = "今晚吃螃🦀️蟹吗？") => {
   const url = new URL("/say/hi", base.origin);
   url.searchParams.set("message", message);
   console.log("sayHi=>", data, url.href);
-  const res = await dwebServiceWorker.externalFetch(
-    `game.dweb.waterbang.top.dweb`,
-    url
-  );
+  const res = await dwebServiceWorker.externalFetch(`game.dweb.waterbang.top.dweb`, url);
   console.log("收到回应消息 => ", await res.text());
 };
 
 const canOpenUrl = async () => {
-  const res = await dwebServiceWorker.canOpenUrl(
-    `game.dweb.waterbang.top.dweb`
-  );
+  const res = await dwebServiceWorker.canOpenUrl(`game.dweb.waterbang.top.dweb`);
   console.log("canOpenUrl=>", res);
 };
 
@@ -94,13 +89,14 @@ dwebServiceWorker.addEventListener("fetch", async (event) => {
   if (url.pathname.endsWith("/say/hi")) {
     const hiMessage = url.searchParams.get("message");
     console.log(`收到:${hiMessage}`);
+    console.log("body=>", await event.request.text());
     // 发送消息回去
     return event.respondWith(`我是plaoc-html-demo 我接收到了消息`);
   }
   return event.respondWith("Not match any routes");
 });
 
-const restart = async () => {
+const restart = () => {
   dwebServiceWorker.restart();
 };
 
