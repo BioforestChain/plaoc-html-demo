@@ -1,9 +1,8 @@
 {
 	"dependencies": {
 		"vite": "^4.4.9",
-		"@plaoc/plugins":"0.4.5",
-		"@plaoc/is-dweb":"0.0.1"
+		"@plaoc/plugins": "file:../../plaoc/build/client",
+		"@plaoc/is-dweb": "file:../../plaoc/build/is-dweb"
 	},
-	"devDependencies": {
-	}
+	"devDependencies": {}
 }
