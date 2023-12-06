@@ -1,5 +1,11 @@
+import * as isDweb from "@plaoc/is-dweb";
 import "@plaoc/plugins";
 import { barcodeScannerPlugin, configPlugin, dwebServiceWorker, fileSystemPlugin } from "@plaoc/plugins";
+
+console.log("xxx=>", isDweb.dwebTarget, isDweb.isDweb);
+
+Object.assign(globalThis, { isDweb });
+
 const barcodeScanner = document.querySelector("dweb-barcode-scanning")!;
 const handleSubmit = async ($event: Event) => {
   $event.preventDefault();
