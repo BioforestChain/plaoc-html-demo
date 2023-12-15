@@ -1,4 +1,12 @@
 {
   "name": "plaoc-html-demo",
-  "packageManager": "yarn@4.0.2"
+  "packageManager": "yarn@4.0.2",
+  "scripts": {
+    "build": "vite build"
+  },
+  "dependencies": {
+    "@plaoc/is-dweb": "file:../../plaoc/build/is-dweb",
+    "@plaoc/plugins": "file:../../plaoc/build/client",
+    "vite": "^4.4.9"
+  }
 }
