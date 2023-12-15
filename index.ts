@@ -91,7 +91,7 @@ dwebServiceWorker.addEventListener("fetch", async (event) => {
     console.log(`收到:${hiMessage}`);
     console.log("body=>", await event.request.text());
     // 发送消息回去
-    return event.respondWith(`我是plaoc-html-demo 我接收到了消息`);
+    return event.respondWith(`plaoc-html-demo/echo:${hiMessage}`);
   }
   return event.respondWith("Not match any routes");
 });
