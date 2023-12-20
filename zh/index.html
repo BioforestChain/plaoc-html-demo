@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,16 +9,10 @@
 </head>
 
 <body>
-  <h2>zh</h2>
-  <!-- <dweb-status-bar></dweb-status-bar> -->
-  <dweb-barcode-scanning></dweb-barcode-scanning>
-  <!-- <dweb-virtual-keyboard></dweb-virtual-keyboard> -->
-  <dweb-haptics></dweb-haptics>
-  <dweb-device></dweb-device>
-  <dweb-mwebview></dweb-mwebview>
+  <h2>测试全部plaoc/plugins</h2>
   <div>
     <h3>app之间通信(默认发送给game)</h3>
-    <input id="input1" >
+    <input id="input1">
     <button onclick="sayHi()">sayHi</button>
     <button onclick="canOpenUrl()">app是否安装</button>
   </div>
@@ -29,33 +24,17 @@
     <h3>设置语言</h3>
     <button onclick="setLang()">setLang</button>
   </div>
+  <br>
+  <hr>
   <div>
-    <h3>保存图片到相册(android only/ios only)</h3>
-    <form onsubmit="savePictures(event)">
-      <input type="file" name="savePictures" id="savePictures">
-      <input type="submit" value="保存图片到相册">
-    </form>
+    <h2>插件集成测试</h2>
+    <button onclick="runPlugins()">测试插件</button>
   </div>
-  <div>
-    <h3>图片识别</h3>
-    <form onsubmit="handleSubmit(event)">
-      <input type="file" name="fileToUpload" id="fileToUpload">
-      <input type="submit" value="上传文件">
-    </form>
-  </div>
-  <div>
-    <h3>打开扫码</h3>
-    <button onclick="startScanning()">startScanning</button>
-  </div>
-  <div>
-    <h3>getUUID</h3>
-    <button onclick="getUUID()">getUUID</button>
-  </div>
-  <div>
-    <h3>打开网页</h3>
-    <button onclick="open()">open</button>
+  <div id="output"
+    style="margin: 10px;padding:2px;background-color: rgba(144, 234, 10, 0.467); width: 90%;min-height: 20px;">
   </div>
 
   <script type="module" src="./index.ts"></script>
 </body>
+
 </html>

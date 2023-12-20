@@ -1,58 +1,17 @@
 import "@plaoc/plugins";
-import { barcodeScannerPlugin, configPlugin, dwebServiceWorker, fileSystemPlugin } from "@plaoc/plugins";
-const barcodeScanner = document.querySelector("dweb-barcode-scanning")!;
-const handleSubmit = async ($event: Event) => {
-  $event.preventDefault();
+import { configPlugin, dwebServiceWorker } from "@plaoc/plugins";
+import { process } from "./barcode-scannering";
+import { message } from "./debug";
 
-  const target = document.getElementById("fileToUpload") as HTMLInputElement;
-  if (target && target.files?.[0]) {
-    const img = target.files[0];
-    alert(await barcodeScannerPlugin.process(img));
-  }
+// 测试所有的api
+const runPlugins = () => {
+  message("测试 process识别图片");
+  process();
 };
 
-const startScanning = () => {
-  barcodeScanner.startScanning();
-};
-
-// const haptics = document.querySelector("dweb-haptics")!;
-
-// const impactLight = async () => {
-//   await haptics.impactLight({ style: ImpactStyle.Heavy });
-// };
-// const notification = async () => {
-//   await haptics.notification({ type: NotificationType.Success });
-// };
-
-const share = document.querySelector("dweb-share")!;
-// 分享
-const shareHandle = async ($event: { preventDefault: () => void }) => {
-  $event.preventDefault();
-  const target = document.getElementById("$shareHandle") as HTMLInputElement;
-  if (target && target.files?.[0]) {
-    return await share.share({
-      title: `分享:${target.files[0].name}`,
-      text: `size:${target.files[0].size},type:${target.files[0].type}`,
-      files: target.files,
-    });
-  }
-  return await share.share({
-    title: "分享标题🍉",
-    text: "分享文字分享文字",
-    url: "https://gpt.waterbang.top",
-    files: undefined,
-  });
-};
-
-const device = document.querySelector("dweb-device")!;
-const getUUID = async () => {
-  console.log(await device.getUUID());
-};
-
-// const mwebview = document.querySelector("dweb-mwebview")!;
-
-const open = async () => {
-  // mwebview.open("https://docs.dweb-browser.org/");
+const canOpenUrl = async () => {
+  const res = await dwebServiceWorker.canOpenUrl(`game.dweb.waterbang.top.dweb`);
+  console.log("canOpenUrl=>", res);
 };
 
 // 向desktop.dweb.waterbang.top.dweb 发送消息
@@ -68,11 +27,6 @@ const sayHi = async (message = "今晚吃螃🦀️蟹吗？") => {
   console.log("sayHi=>", data, url.href);
   const res = await dwebServiceWorker.externalFetch(`game.dweb.waterbang.top.dweb`, url);
   console.log("收到回应消息 => ", await res.text());
-};
-
-const canOpenUrl = async () => {
-  const res = await dwebServiceWorker.canOpenUrl(`game.dweb.waterbang.top.dweb`);
-  console.log("canOpenUrl=>", res);
 };
 
 dwebServiceWorker.addEventListener("fetch", async (event) => {
@@ -101,24 +55,10 @@ const setLang = async () => {
   console.log("res=>", res);
 };
 
-const savePictures = async ($event: Event) => {
-  $event.preventDefault();
-  const target = document.getElementById("$savePictures") as HTMLInputElement;
-  if (target && target.files?.[0]) {
-    alert(await fileSystemPlugin.savePictures({ files: target.files }));
-  }
-};
-
 Object.assign(globalThis, {
-  savePictures,
   setLang,
   sayHi,
-  canOpenUrl,
-  getUUID,
+  runPlugins,
   restart,
-  shareHandle,
-  open,
-  handleSubmit,
-  startScanning,
   dwebServiceWorker,
 });
