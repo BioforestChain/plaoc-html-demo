@@ -4,8 +4,7 @@ import {
   NotificationType,
   barcodeScannerPlugin,
   configPlugin,
-  dwebServiceWorker,
-  fileSystemPlugin,
+  dwebServiceWorker
 } from "@plaoc/plugins";
 const barcodeScanner = document.querySelector("dweb-barcode-scanning")!;
 const handleSubmit = async ($event: Event) => {
@@ -108,16 +107,7 @@ const setLang = async () => {
   console.log("res=>", res);
 };
 
-const savePictures = async ($event: Event) => {
-  $event.preventDefault();
-  const target = document.getElementById("$savePictures") as HTMLInputElement;
-  if (target && target.files?.[0]) {
-    alert(await fileSystemPlugin.savePictures({ files: target.files }));
-  }
-};
-
 Object.assign(globalThis, {
-  savePictures,
   setLang,
   sayHi,
   canOpenUrl,

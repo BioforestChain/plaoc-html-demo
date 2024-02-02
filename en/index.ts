@@ -1,6 +1,6 @@
 import * as isDweb from "@plaoc/is-dweb";
 import "@plaoc/plugins";
-import { barcodeScannerPlugin, configPlugin, dwebServiceWorker, fileSystemPlugin } from "@plaoc/plugins";
+import { barcodeScannerPlugin, configPlugin, dwebServiceWorker } from "@plaoc/plugins";
 
 console.log("xxx=>", isDweb.dwebTarget, isDweb.isDweb);
 
@@ -108,16 +108,7 @@ const setLang = async () => {
   console.log("res=>", res);
 };
 
-const savePictures = async ($event: Event) => {
-  $event.preventDefault();
-  const target = document.getElementById("$savePictures") as HTMLInputElement;
-  if (target && target.files?.[0]) {
-    alert(await fileSystemPlugin.savePictures({ files: target.files }));
-  }
-};
-
 Object.assign(globalThis, {
-  savePictures,
   setLang,
   sayHi,
   canOpenUrl,
